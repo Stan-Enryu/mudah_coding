@@ -1,0 +1,82 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class='container-fluid'>
+<div class="card" style="width: 100%;">
+
+    <div class="card-header">
+        <div class="row">
+            
+            <div class="col-9 ">
+                <h1 style="width: 10ch;">{{ object.title }}</h1>
+            </div>
+
+            {% if request.user.is_authenticated %}
+            <div class="col">
+                <div id="topic-add">
+                    <h3>
+                        <a class="btn btn-primary offset-3 mt-5" href="{% url 'post-create' object.id %}">Tambah Postingan</a>
+                    </h3>
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+    </div>
+
+    
+    
+    <div class="posts mt-0">
+        {% for post in posts %}
+        <div class="card w-100">
+            <div class="card">
+            <div class="row post mb-2">
+                
+                <div class="col-8 offset-1 mt-4">
+
+                    <a href="{% url 'post-detail' post.id %}">
+                        <h3 class="post_title">{{ post.title }}</h3>
+                    </a> 
+                    <p class="row">
+                    <p> 
+                        
+                    </p>
+                    
+                    <a href="{% url 'profile' %}">
+                        <img class="rounded-circle account-img thumbpic" src="{{ post.author.profile.image.url }}" height="25">
+                        <a>  oleh {{ post.author }} | {{ post.time_created }}  </a>
+                    </a>
+                    </p>
+                    <hr>
+                </div>
+
+            </div>
+            </div>
+        </div>
+        
+        {% endfor %}
+    </div>
+</div>
+</div>
+<div class="topics">
+        {% for topic in topics %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-1 offset-1">
+
+                        <a href="{% url 'topic-detail' topic.id %}">
+                            <h3 class="row topic_title;">{{ topic.title }}</h3>
+                        </a>
+                        <p class="row">
+                            {{ topic.description }}
+                        </p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+{% endblock content %} 
+<!--username=post.author.profile.user.username %}-->

@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block app_css %}
+  <link rel="stylesheet" type="text/css" href={% static "browse_course/css/course.css" %}>
+{% endblock app_css %}
+
+{% block content %}
+  <section class="gallery-block cards-gallery">
+    <div class="container">
+      <div class="heading">
+        <h2>Browse Course</h2>
+            <p>Anda bisa memilih dimana anda ingin memulai perjalanan Coding Anda. Darimanapun Anda memulainya, kami yakin Anda pasti berhasil.</p>
+      </div>
+      <div class="row"> 
+
+        {% if courses %}
+          {% for course in courses %}
+            <div class="col-md-6 col-lg-4">
+              <div class="card border-0 transform-on-hover">
+                <a class="lightbox" href={% url 'step_course' course_slug=course.slug %}>
+                  <img src={{course.photo.url}} class="card-img-top" style="height: 150px; width: 150px;"></a>
+                <div class="card-body">
+                  <h6>{{course.name}} Language</h6>
+                  <p class="text-muted card-text">{{course.description}}</p>
+                </div>
+              </div>
+            </div>
+          {% endfor %}
+        {% else %}
+          <div class="col-md-12">No Courses</div>
+        {% endif %}
+
+      </div>
+    </div>
+   </section>
+{% endblock content %}
+   

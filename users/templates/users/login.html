@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% load static %}
+
+{% block app_css %}
+    <link rel="stylesheet" type="text/css" href={% static "users/css/login.css" %}>
+{% endblock app_css %}
+
+{% block content %}
+<div class="container my-bg">
+    <div class="content-section">
+        <form method="POST">
+            {% csrf_token %}
+            
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">Login</legend>
+            </fieldset>
+            <div class="form-group">
+                <label for="exampleInputEmail1">Username</label>
+                <input type="text" class="form-control" id="username" name="username">
+            </div>
+            <div class="form-group">
+                <label for="exampleInputPassword1">Password</label>
+                <input type="password" class="form-control" id="password" name="password" >
+            </div>
+            <div class="form-group">
+                <button class="btn btn-outline-primary" type="submit">Login</button>
+            </div>
+        </form>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Belum ada akun? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+            </small>
+        </div>
+    </div> 
+</div> 
+{% endblock content %}

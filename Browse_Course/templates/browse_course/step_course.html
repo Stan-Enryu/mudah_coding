@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block app_css %}
+  <link rel="stylesheet" type="text/css" href={% static "browse_course/css/step.css" %}>
+  <script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+{% endblock app_css %}
+
+{% block content %}
+  <!-- Header Page -->
+<div class="jumbotron page-header container-fluid">
+  <div class="row">
+    <div class="col-xs-12 col-sm-8 col-lg-9 col-xl-10">
+      <h1>{{ courses.name }} Language</h1>
+      <p>{{ courses.description }}</p>
+    </div>
+    <div class="col-xs-6 col-sm-4 col-lg-3 col-xl-2 progress-and-review">
+      <div class="progress">
+        <div class="progress-bar progress-bar-striped progress-bar-animated " role="progressbar" aria-valuemin="0" aria-valuemax="100" style="width: {{ percen_done }}%">{{ percen_done }}%</div>
+      </div>
+      <br>
+      <div class="header-right-text">
+        <a href={% url 'review-view' courses.slug %}>
+          <button type="button" class="btn btn-outline-secondary btn-sm">Review this course</button>
+        </a>
+        {% if is_premium %}
+          <hr>
+          <a href={% url 'review-create' courses.slug %}>
+            <button type="button" class="btn btn-outline-secondary btn-sm">Create Review course</button>
+          </a>
+        {% endif %}
+        
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- Step Template -->
+<div class="container" id="accordion">
+
+  {% for step_course, sub_step_course in sub_step_and_step_courses %}
+
+  <div class="main-body">
+    <div class="row gutters-sm">
+      <div class="col-sm-12 mb-1">
+        <div class="card h-100">
+
+          {% if is_premium is False and forloop.counter > 1 %}
+            <a href="{% url "pricing" %}" class="locked-paid-content">
+          {% else %}
+            <a data-toggle="collapse" data-target="#collapse{{ step_course.id }}" aria-expanded="false" aria-controls="collapse{{ step_course.id }}">
+          {% endif %}
+          
+              <div class="row">
+                <div class="card-body col-sm-9" id="heading{{ step_course.id }}" >
+                  <h5 class="d-flex col-sm-12">
+                    {{step_course.name}}
+                  </h5>
+                  <h7 class="col-sm-12 text-secondary">
+                    {{step_course.description}}
+                  </h7>
+                </div>
+
+                <div class="col-xs-3 col-sm-3 col-lg-2 ml-auto drop-down icon-lock-chevron">
+
+                  {% if is_premium is False and forloop.counter > 1 %}
+                    <i class="fa fa-lock"></i>
+                  {% elif step_course in step_done %}
+                    <i class="fa fa-check check-done" aria-hidden="false"></i>
+                  {% endif %}
+
+                </div>
+              </div>
+            </a>
+              
+            <div class="col-sm-12">
+              
+                <div id="collapse{{ step_course.id }}" class="collapse" aria-labelledby="heading{{ step_course.id }}" data-parent="#accordion">
+              
+                {% for sub_step in sub_step_course %}
+
+                  <hr>
+                {% if sub_step not in free_course and is_premium is False %}
+                  <a href="{% url "pricing" %}" class="locked-paid-content">
+                {% elif sub_step %}
+                  <a href="{% url 'sub_step_course' course_slug=courses.slug step_slug=step_course.slug sub_step_id=sub_step.sub_step_course_id %}">
+                {% endif %}      
+                    <div class="card-body col-sm-12 row">
+                      <div class="col-xs-9 col-sm-9 ">
+                        {{ sub_step.name }}
+                      </div>
+                      <div class="col-xs-1 col-sm-1 ml-auto drop-down icon-chevron-substep">
+                      {% if sub_step not in free_course and is_premium is False %}
+                        <i class="fa fa-lock"></i>
+                      {% elif sub_step in sub_step_done %}
+                        <i class="fa fa-check check-done" aria-hidden="false"></i>
+                      {% endif %}
+                      </div>
+                    </div>
+                  </a>
+
+                {% endfor %}
+                </div>
+
+            </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+  
+
+</div>
+{% endblock content %}
+

@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block app_css %}
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+        <link rel="stylesheet" type="text/css" href={% static 'browse_course/css/sub_step.css' %}>
+
+{% endblock app_css %}
+        
+
+{% block content %}
+
+{{ form.media }}
+<form method="POST" >
+    {% csrf_token %}
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-4">
+            <div class="mt-4 mx-2">
+                <a class="btn btn-primary" href={% url "step_course" course_slug=course.slug %} role="button" style="align-items: center;">
+                Daftar Isi
+            </a>
+            </div> 
+
+        </div>
+            
+        <div class="col-4 ">
+            <div class="mt-4 mx-2">
+                <button type="submit" class="btn btn-primary" style="align-items: center; margin-left: 15%;" name="compile_run" value="click">
+                    Compile & Run
+                </button> 
+
+                <a class="btn btn-primary" href="{% url 'sub_step_course' course_slug=course.slug step_slug=step.slug sub_step_id=sub_step_page.number %}" role="button" style="align-items: center; margin-left: 1%;">Reset</a>
+                
+
+            </div>
+        </div>
+
+        <div class="row ">
+        <div class="col-4 mx-auto">
+            <div class="mt-4  mr-4">
+        {% if sub_step_page.has_previous %}
+                <a class="btn btn-primary" href="{% url 'sub_step_course' course_slug=course.slug step_slug=step.slug sub_step_id=sub_step_page.previous_page_number %}" role="button" style="align-items: center; margin-left: 20%;"><- Sebelumnya</a>
+ 
+        {% else %}
+            
+                <a class="btn btn-secondary disabled" role="button" style="align-items: center; margin-left: 20%;"><- Sebelumnya</a>
+            
+        {% endif %}
+            </div> 
+        </div>
+
+        <div class="col-4 text-center">
+            <div class="mt-4 ml-3 mr-1">
+                <div class="box-progress" style="padding-top: 5px;">
+                <p style=" text-align: center; margin-left: 0%;">
+                    {{sub_step_page.number}}/{{len_all_sub_step}}
+                </p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-4">
+            <div class="mt-4">
+        {% if sub_step_page.has_next  %}
+        
+                <a class="btn btn-primary" href="{% url 'sub_step_course' course_slug=course.slug step_slug=step.slug sub_step_id=sub_step_page.next_page_number %}" role="button" style="margin-left: -21%;">Selanjutnya -></a>
+            
+
+        {% else %}
+        
+            
+                <a class="btn btn-secondary disabled" role="button" style="margin-left: -21%;">Selanjutnya -></a>
+
+
+        {% endif %}
+            </div>
+        </div>
+
+        </div>
+    </div>
+        
+    <div class="row">
+        <div class="col-4 mx-auto">
+            <div class="my-4 mx-2">
+
+                <div class="card" style="">
+                    <img class="card-img-top" src="..." alt="">
+                    <div class="card-body">
+                    <h5 class="card-title">Penjelasan</h5>
+                    <p class="card-text">
+                        {{ sub_step.explanation|linebreaksbr }}
+                    </p>
+                    </div>
+                </div>
+
+                <div class="card" style="margin-top: 5%;">
+                    <img class="card-img-top" src="..." alt="">
+
+                    <div class="card-body">
+                        <h5 class="card-title">Instruksi</h5>
+                        <p class="card-text">
+                            {{ sub_step.instruction|linebreaksbr }}
+                        </p>
+                        <!--petunjuk-->
+                        <p>
+                            <a class="btn btn-primary" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                              Petunjuk
+                            </a>
+                            <div class="collapse" id="collapseExample">
+                                <div class="card card-body">
+                                  {{ sub_step.hint }}
+
+                                </div>
+                            </div>
+                        </p>
+                        
+                        
+                         <!--end-petunjuk-->
+                    
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        <div class="col-md-8 mx-auto">
+            <div class="mx-4 mt-4">
+                <div id="codeeditor">
+                </div>                
+                  {{ form.code }}
+                                              
+            </div>
+
+            <div class="mx-4" >
+                <div class="card" style="width: 100%;">
+                    <img class="card-img-top" src="..." alt="">
+                    <div class="card-body" style="color: white; background-color:{{ color_output }};">
+                        <h5 class="card-title">
+                            Code Output ‎‎ ‎&darr;
+                        </h5>
+                        {{ output|linebreaksbr }}
+                        <pre class="card-text">
+
+                        </pre>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+</form> 
+        
+        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+{% endblock content %}

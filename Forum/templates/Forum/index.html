@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% load static %}
+
+{% block content %}
+<div class='container-fluid'>
+<div class="card" style="width: 100%;">
+    <div class="card-header">
+        <div class="row">
+        
+            <div class="col-9 ">
+                <h1 style="width: 6ch;">Topics</h1>
+            </div>
+
+            {% if user %}
+             <div class="col">
+                <div id="topic-add">
+                    <h3>
+                        <a class="btn btn-primary offset-5 mt-5" href="{% url 'topic-add' %}" role="button">Tambah Topic</a>
+                    </h3>
+                </div>
+             </div>   
+            {% endif %}
+
+        </div>
+    </div>
+    <div class="topics">
+        {% for topic in topics %}
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-10 offset-1">
+                        <a href="{% url 'topic-detail' topic.id %}">
+                            <h3 class="row topic_title;">{{ topic.title }}</h3>
+                        </a>
+                        <p class="row">
+                            {{ topic.description }}
+                        </p>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+</div>
+{% endblock content %} 

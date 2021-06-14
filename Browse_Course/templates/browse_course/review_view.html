@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% load static %}
+<html lang="en">
+<head>
+    
+</head>
+
+{% block app_css %}
+    <link rel="stylesheet" type="text/css" href={% static "browse_course/css/review_create.css" %}>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Review</title>
+{% endblock app_css %}
+
+{% block content %}
+<div class='container'>
+            
+    <hr style="color: gray;">
+    {% for review in all_review %}
+        {% if forloop.counter0|divisibleby:3 is True %}
+        <hr style="color: gray;">
+            <div class="row">
+        {% endif %}
+        <div class="col-sm-4">
+            <div class="card text-center">
+                <div class="card-body">
+                    <img src={{ review.user.profile.image.url }} class="rounded-circle account-img thumbpic" height="100">
+                    
+                    <br>
+
+                    <p class="card-text">
+                        {{ review.description }}
+                    </p>
+
+                    <h6 class="card-text">
+                        {{ review.user.profile.nama }}
+                    </h6>
+                    {% with ''|center:review.score as range %}
+                    {% for _ in range  %}
+                        <span class="fa fa-star checked"></span>
+                    {% endfor %}
+                    {% endwith %}
+                    <div class="lil-margin-bot"></div>
+                </div>
+            </div>
+        </div>
+
+        {% if forloop.counter|divisibleby:3 is True %}
+            </div>
+        {% endif %}
+    
+    {% endfor %}
+    </div>
+    <hr style="color: gray;">        
+</div>    
+{% endblock content %}

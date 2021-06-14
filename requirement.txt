@@ -1,0 +1,5 @@
+Django==3.2.3
+mysqlclient==2.0.3
+django-crispy-forms==1.11.2
+django-codemirror-widget==0.5.0
+Pillow==7.0.0

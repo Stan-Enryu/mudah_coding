@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+<div class='container-fluid'>
+<div class="card" style="width: 100%;">
+    <div class="card-header">
+        <div class="row">
+            <div class="col-9  mt-5">
+                    <h1 id="header">{{ object.title }}</h1>
+            </div>
+        </div>
+
+        <div class="row">
+            
+            {% if object.author == user %}
+                <div class="col-9 ">
+                    <a class="btn btn-primary btn-sm mt-1 mb-1" href="{% url 'post-update' object.id %}">Edit</a>
+                    <a class="btn btn-danger btn-sm mt-1 mb-1" href="{% url 'post-delete' object.id %}">Delete</a>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="row mt-4">
+            <div class="col-9 align-self-center">
+                <h5>{{ object.description }}<h5>
+            </div>
+            <div class="col-9">
+                <hr class="mt-5">
+            </div>
+            <div class="col-9  ">
+                <a href="{% url 'profile' %}">
+                    <img class="rounded-circle account-img thumbpic" src="{{ object.author.profile.image.url }}" height="50">
+                </a>
+            </div>
+            <!-- username=object.author.profile.user.username -->
+            
+        </div>
+    </div>
+    <div class="card">
+        {% for comment in comments %}
+        <div class="card">
+            <div class="card-body">
+            <div class="row mt-1 mb-1">
+
+                <div class="col-2  ">
+                    <a href="{% url 'profile' %}">
+                        <img class="rounded-circle account-img thumbpic" src="{{ comment.author.profile.image.url }}" height="50">
+                    </a>
+                    <hr>
+                    <a> {{ comment.author }} | {{ comment.time_created }}</a>
+                    <!-- username=comment.author.profile.user.username -->
+                </div>
+
+                <div class="col-3 align-self-center">
+                    <h5>{{ comment.description }}<h5>
+
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
+
+        <div class="row mt-2">
+            <div class="col-1 offset-1 ">
+                <img class="rounded-circle account-img thumbpic" src="{{ user.profile.image.url }}" height="50">
+                <hr>
+                <a> {{ user.profile.nama }} </a>
+            </div>
+
+            <div class="col-1">
+                <form method="POST">
+                    {% csrf_token %}
+                    <fieldset class="form-group">
+                        {{ form|crispy }}
+
+                    </fieldset>
+                    <div class="form-group">
+                        <button class="btn btn-outline-info" type="submit">Submit</button>
+
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>   
+
+    <script>
+        document.getElementById("div_id_author").style.display="none"
+        document.getElementById("div_id_post").style.display="none"
+        document.getElementById("div_id_body").getElementsByTagName('label')[0].style.display="none"
+    </script>
+{% endblock content %} 
