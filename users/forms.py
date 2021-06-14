@@ -5,24 +5,19 @@ from django.contrib.auth.forms import PasswordChangeForm
 from .models import Profile
 
 
-class UserRegisterForm(UserCreationForm):
+class RegisterForm(UserCreationForm):
     email = forms.EmailField()
 
     class Meta:
         model = User
         fields = ['username', 'email', 'password1', 'password2']
 
-class UserUpdateForm(PasswordChangeForm):
+class SettingForm(PasswordChangeForm):
 
     class Meta:
         model = User
-        fields = ['old_password','new_password1','new_password1']
+        fields = ['old_password','new_password1','new_password2']
 
-        # new_password2 = forms.CharField(
-        #     label=("New password confirmation"),
-        #     strip=False,
-        #     widget=forms.PasswordInput(attrs={'autocomplete': 'new-password','class':'form-control'}),
-        # )
         widgets = {
             'old_password': forms.TextInput(
                     attrs = {
@@ -36,7 +31,7 @@ class UserUpdateForm(PasswordChangeForm):
 
                     }
                 ),
-            'new_password1': forms.TextInput(
+            'new_password2': forms.TextInput(
                     attrs = {
                         'class':'form-control',
 
@@ -45,12 +40,12 @@ class UserUpdateForm(PasswordChangeForm):
         }
 
 
-class ProfileUpdateForm(forms.ModelForm):
+class ProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ['nama','handphone','image','email','linkedin','twitter','instagram','facebook','description']
+        fields = ['name','handphone','image','email','linkedin','twitter','instagram','facebook','description']
         widgets = {
-            'nama': forms.TextInput(
+            'name': forms.TextInput(
                     attrs = {
                         'class':'form-control',
                     }

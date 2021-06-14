@@ -2,12 +2,10 @@ from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
 from Browse_Course.models import Sub_Step_Course, Step_Course
-# from django.utils import timezone
-import datetime
 
 class Profile(models.Model):
     user            = models.OneToOneField(User, on_delete=models.CASCADE)
-    nama            = models.CharField(max_length=255,blank=True)
+    name            = models.CharField(max_length=255,blank=True)
     handphone       = models.CharField(max_length=15,null=True,blank=True)
     description     = models.TextField(null=True,blank=True)
     image           = models.ImageField(default='default.jpg', upload_to='profile_pics')

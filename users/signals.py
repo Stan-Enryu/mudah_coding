@@ -12,6 +12,6 @@ def save_profile(sender, instance, created, **kwargs):
         my_group = Group.objects.get(name='Free') 
         my_group.user_set.add(user)
         profile = Profile(user=user)
-        profile.nama = user.username
+        profile.name = user.username
         profile.email = user.email
         profile.save()

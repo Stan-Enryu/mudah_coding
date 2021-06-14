@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 
 # Create your models here.
 class Course(models.Model):
+	# course_id = sebagai tanda urutan
 	course_id 	= models.IntegerField()
 	name 		= models.CharField(max_length=255)
 	photo 		= models.ImageField(upload_to='course')
@@ -18,6 +19,7 @@ class Course(models.Model):
 		super(Course, self).save()
 
 class Step_Course(models.Model):
+	# step_course_id = sebagai tanda urutan
 	step_course_id 	= models.IntegerField()
 	name 			= models.CharField(max_length=255)
 	description 	= models.TextField()
@@ -32,6 +34,7 @@ class Step_Course(models.Model):
 		super(Step_Course, self).save()
 
 class Sub_Step_Course(models.Model):
+	# sub_step_course_id = sebagai tanda urutan
 	sub_step_course_id 	= models.IntegerField()
 	name            	= models.CharField(max_length=255)
 	explanation 		= models.TextField()
