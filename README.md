@@ -1,11 +1,9 @@
 # versi
 Ubuntu 20.04
 
-Django 3.2.3
+Python 3.8.10
 
-Python 3.8.5
-
-gcc
+gcc (Ubuntu 9.3.0-17ubuntu1~20.04) 9.3.0
 
 # apt awal
 sudo apt-get install libreadline-gplv2-dev libncursesw5-dev libssl-dev libsqlite3-dev tk-dev libgdbm-dev libc6-dev libbz2-dev
